@@ -47,6 +47,7 @@ function uploadFile(file) {
 <div style="width: 400px; height: 200px; background: lightgrey" id="pasteTarget">
 Click and paste here.
 </div>
+<p>{{ answers|length }} answers:</p>
 <ul>
 {% for answer in answers %}
     <li><a href="{{ url_for('results', imhash=answer[0]) }}"><code>{{ answer[0] }}</code>: {{ answer[1] }}</a></li>
