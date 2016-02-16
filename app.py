@@ -4,6 +4,8 @@ import hashlib
 from flask import Flask, render_template, request, redirect, url_for, \
 	send_from_directory
 
+# TODO: config logging
+
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads'
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
@@ -56,11 +58,11 @@ def upload():
 			imname = imhash + ext
 			impath = os.path.join(app.config['UPLOAD_FOLDER'], imname)
 			if not os.path.exists(impath):
-				print("New image!")
+				logging.info("New image: %s" % imname)
 				with open(impath, 'wb') as f:
 					f.write(imdata)
 			else:
-				print("Old image.")
+				logging.info("Old image: %s" % imname)
 			return url_for('results', imhash=imhash)
 		else:
 			logging.warning("No request data!")
