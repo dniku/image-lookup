@@ -37,7 +37,8 @@ def update_answer(imhash, answer):
 
 @app.route('/')
 def index():
-	return render_template('index.html', answers=answers.items())
+	page_answers = sorted(answers.items(), key=lambda item: item[1])
+	return render_template('index.html', answers=page_answers)
 
 def imhash2path(imhash):
 	return imhash + '.png'
