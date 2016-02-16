@@ -23,7 +23,7 @@ else:
 
 def save_answers():
 	with open(app.config['DB_PATH'], 'w') as f:
-		json.dump(answers, f, sort_keys=True, indent=4)
+		json.dump(answers, f, indent=4)
 
 
 def get_answer(imhash):
@@ -94,6 +94,7 @@ def results(imhash):
 def update():
 	imhash = request.form['imhash']
 	answer = request.form['answer']
+	# both `imhash` and `answer` are `unicode` on py2 and `str` on py3
 	update_answer(imhash, answer)
 	return redirect(url_for('results', imhash=imhash))
 
