@@ -37,7 +37,7 @@ function uploadFile(file) {
     xhr.onerror = function() {
         console.log("Error! Upload failed. Can not connect to server.");
     };
-    xhr.open("POST", "upload", true);
+    xhr.open("POST", "/upload", true);
     xhr.setRequestHeader("Content-Type", file.type);
     xhr.send(file);
 }
@@ -47,5 +47,10 @@ function uploadFile(file) {
 <div style="width: 200px; height: 200px; background: lightgrey" id="pasteTarget">
 Click and paste here.
 </div>
+<ul>
+{% for answer in answers %}
+    <li><a href="{{ url_for('results', imhash=answer[0]) }}"><code>{{ answer[0] }}</code>: {{ answer[1] }}</a></li>
+{% endfor %}
+</ul>
 </body>
 </html>
