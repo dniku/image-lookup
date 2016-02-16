@@ -6,9 +6,9 @@
 <img src="{{ url_for('image', imhash=imhash) }}">
 <p>Last answer: {{ answer }}</p>
 <form action="/update" method="post">
-    <input type="hidden" name="imhash" value="{{ imhash }}">
-    <p><input type="text" name="answer" value="{{ answer }}"></p>
-    <p><input type="submit" value="Update"></p>
+	<input type="hidden" name="imhash" value="{{ imhash }}">
+	<p><input type="text" name="answer" value="{{ answer }}"></p>
+	<p><input type="submit" value="Update"></p>
 </form>
 <p><a href="/">Go to main page</a></p>
 </body>
