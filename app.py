@@ -1,10 +1,11 @@
 import os, json
+import threading
 import logging
 import hashlib
 from flask import Flask, render_template, request, redirect, url_for, \
 	send_from_directory
 
-# TODO: config logging
+logging.basicConfig(level=logging.INFO)
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads'
@@ -20,22 +21,22 @@ if os.path.exists(app.config['DB_PATH']):
 else:
 	answers = {}
 
+lock = threading.RLock()
 
 def save_answers():
-	with open(app.config['DB_PATH'], 'w') as f:
-		json.dump(answers, f, indent=4)
+	with lock:
+		with open(app.config['DB_PATH'], 'w') as f:
+			json.dump(answers, f, sort_keys=True, indent=4)
 
 
 def get_answer(imhash):
-	return answers.get(imhash, '')
+	with lock:
+		return answers.get(imhash, '')
 
 
 def update_answer(imhash, answer):
-	if answer:
+	with lock:
 		answers[imhash] = answer
-	else:
-		if imhash in answers:
-			del answers[imhash]
 	save_answers()
 
 
